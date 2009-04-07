@@ -15,7 +15,10 @@ TODO:
 
  ChangeLog:
 
- * 4/4/09	initial version
+* 4/7/09
+	- added join()
+
+* 4/4/09	initial version
 	- uses realloc for each new token. (allocates a char pointer)
 
 */ 
@@ -86,13 +89,13 @@ char** split(const char* cstr, const char* delim) {
 
 
 
-// TODO
 char* join(const char** parts, const char* delim) {
 	
 	const char** part;
 	char* result = NULL;
 	
 	int delim_len;
+	int result_len;
 	
 	
 	if ((NULL == parts) || (NULL == *parts)) {
@@ -108,26 +111,35 @@ char* join(const char** parts, const char* delim) {
 	}
 	
 
-	//		0x1		0x2  0x3
+	//			0x1		0x2  0x3
 	// pices = {"one", "two", NULL}; delim = " "
 	// result = "one two"
 	
+	// count the length of result
+	result_len = -delim_len;
+	for (part = parts; NULL != *part; part++) {
+		result_len += delim_len + strlen(*part);
+	}
+	
+	result = (char*) malloc((result_len+1) * sizeof(char));
+	
+	if (NULL == result) {
+		// if running on 64k
+		fprintf(stderr, "join(): Error allocating memory");
+		return NULL;
+	}
+	
+	// construct result
 	for (part = parts; NULL != *part; part++) {
 		
 		// if last part, don't append delim
 		if (*(part+1) != NULL) {
-			result = (char*) realloc(result, (strlen(*part) + delim_len + 1) * sizeof(char));
 			strcat(result, *part);
 			strcat(result, (delim != NULL)? delim : "");
 		}
 		else {
-			printf("last size = %d, result: %s\n", (strlen(*part) + 1), result);
-				
-			// FIXME realloc() says invalid next size
-			result = (char*) realloc(result, (strlen(*part) + 1) * sizeof(char));
 			strcat(result, *part);
 		}
-
 	}
 	
 	return result;
