@@ -22,25 +22,25 @@ TODO:
 
 
 
-
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 
 // This function returns an array of tokens.
 // The input string is unmodified.
 
-char ** split(const char * cstr, const char * delim) {
+char** split(const char* cstr, const char* delim) {
 
 	/* returns { "1", "2", "3", NULL }
 	 *
 	 * reallocate 1 new pointer at a time.
 	*/
 
-	char * str;
+	char* str;
 	
-	char **pieces = NULL;
-	char * piece;
+	char** pieces = NULL;
+	char* piece;
 	int count = 0;
 
 	// make a copy of the string
@@ -54,10 +54,10 @@ char ** split(const char * cstr, const char * delim) {
 	while (piece != NULL) {
 		count++;
 		
-		// change size - idea from cplusplus.com
+		// change size of pointer array - idea from cplusplus.com
 		pieces = (char**) realloc(pieces, count * sizeof(char*));
 		if (pieces == NULL) {
-			puts("Error allocating memory");
+			fprintf(stderr, "split(): Error allocating memory");
 			return NULL;
 		}
 
@@ -87,9 +87,50 @@ char ** split(const char * cstr, const char * delim) {
 
 
 // TODO
-char* join(char** parts, char* delim) {
+char* join(const char** parts, const char* delim) {
+	
+	const char** part;
+	char* result = NULL;
+	
+	int delim_len;
+	
+	
+	if ((NULL == parts) || (NULL == *parts)) {
+		return NULL;
+	}
 
-	return NULL;
+	
+	if (NULL == delim) {
+		delim_len = 0;
+	}
+	else {
+		delim_len = strlen(delim);
+	}
+	
+
+	//		0x1		0x2  0x3
+	// pices = {"one", "two", NULL}; delim = " "
+	// result = "one two"
+	
+	for (part = parts; NULL != *part; part++) {
+		
+		// if last part, don't append delim
+		if (*(part+1) != NULL) {
+			result = (char*) realloc(result, (strlen(*part) + delim_len + 1) * sizeof(char));
+			strcat(result, *part);
+			strcat(result, (delim != NULL)? delim : "");
+		}
+		else {
+			printf("last size = %d, result: %s\n", (strlen(*part) + 1), result);
+				
+			// FIXME realloc() says invalid next size
+			result = (char*) realloc(result, (strlen(*part) + 1) * sizeof(char));
+			strcat(result, *part);
+		}
+
+	}
+	
+	return result;
 }
 
 

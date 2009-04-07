@@ -7,7 +7,7 @@
 
 char** split(const char* cstr, const char* delim);
 
-char* join(char** parts, char* delim);
+char* join(const char** parts, const char* delim);
 
 
 #endif
