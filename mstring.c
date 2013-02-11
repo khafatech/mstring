@@ -131,6 +131,8 @@ char* join(const char** parts, const char* delim) {
 		fprintf(stderr, "join(): Error allocating memory");
 		return NULL;
 	}
+
+    result[0] = '\0';
 	
 	// construct result
 	for (part = parts; NULL != *part; part++) {
