@@ -1,19 +1,22 @@
 /*
 
-Lisenced under GPL V.2 or later (Haha. Is this too tiny to be useful?)
+Lisenced under GPL V.2 or later 
 
-Implements the split() function, like the one in modern programming
+Implements the split() and join() functions, like the ones in modern programming
 languages.
 
 There is already a strtok function in string.h that splits the string, but it
 modifies its argument and requires repeated calls.
 
-TODO:
- - Maybe it could be done by simply calling strtok till it's done, then
- transforming the pieces in the original string to a dynamically allocated string array.
+Author: github.com/quakehead
 
 
  ChangeLog:
+
+* 2/10/13
+    - (after a long time!)
+    - one malloc didn't have +1 for null char 
+    - added free_parts()
 
 * 4/7/09
 	- added join()
@@ -146,5 +149,17 @@ char* join(const char** parts, const char* delim) {
 }
 
 
+void free_parts(const char** parts) {
+    
+    char** part;
+
+    // free the strings
+    for (part = parts; NULL != *part; part++) {
+        free(*part);
+    }
+
+    // free the pointer array
+    free(parts);
+}
 
 

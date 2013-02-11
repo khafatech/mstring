@@ -7,6 +7,7 @@
 int main(void) {
 	
 	char* cstr = "a\tb\tword two\tsdd sdf fsdfs";
+	char* cstr2 = "the quick   brown fox    jumped";
 	char** parts;
 	char** parts_orig;
 
@@ -23,6 +24,7 @@ int main(void) {
 	char* delim = ",";
 
 
+    // print
 	while (*parts != NULL) {
 		printf("%s%s", *parts, *(parts+1)==NULL?"":delim);
 		parts++;
@@ -32,9 +34,12 @@ int main(void) {
 	parts = parts_orig;
 
 	// join
-	printf("%p\n", *parts);
 	str = join((const char **) parts, ":");
 	printf("Join: %s\n", str);
+
+
+    free_parts(parts);
+    free(str);
 
 	return 0;
 }
