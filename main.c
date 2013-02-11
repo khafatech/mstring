@@ -3,11 +3,10 @@
 #include "mstring.h"
 
 
-
 int main(void) {
 	
 	char* cstr = "a\tb\tword two\tsdd sdf fsdfs";
-	char* cstr2 = "the quick   brown fox    jumped";
+	char* cstr2 = "t he quick   brown fox    jumped";
 	char** parts;
 	char** parts_orig;
 
@@ -17,7 +16,7 @@ int main(void) {
 
 	// Test split
 	// TODO free prats
-	parts = split(cstr, "\t");
+	parts = split(cstr2, " ");
 	parts_orig = parts;
 	
 	printf("Split: ");

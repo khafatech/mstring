@@ -1,12 +1,12 @@
 
 main:	main.o mstring.o
-		gcc -Wall $? -o main
+		gcc -Wall $^ -o $@
 
 main.o: main.c
-		gcc -Wall -c $?
+		gcc -Wall -c $<
 
 mstring.o:	mstring.c mstring.h
-	gcc -Wall -c mstring.c
+	gcc -Wall -c $<
 
 
 clean:

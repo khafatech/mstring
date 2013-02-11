@@ -19,7 +19,7 @@ char** split(const char* cstr, const char* delim);
 
 char* join(const char** parts, const char* delim);
 
-void free_parts(const char** parts);
+void free_parts(char** parts);
 
 #endif
 

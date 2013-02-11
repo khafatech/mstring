@@ -149,7 +149,7 @@ char* join(const char** parts, const char* delim) {
 }
 
 
-void free_parts(const char** parts) {
+void free_parts(char** parts) {
     
     char** part;
 
