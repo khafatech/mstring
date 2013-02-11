@@ -47,7 +47,7 @@ char** split(const char* cstr, const char* delim) {
 	int count = 0;
 
 	// make a copy of the string
-	str = malloc(strlen(cstr));
+	str = malloc(strlen(cstr) + 1);
 	if (str != NULL) {
 		strcpy(str, cstr);
 	}
@@ -75,7 +75,7 @@ char** split(const char* cstr, const char* delim) {
 	
 	pieces = (char**) realloc(pieces, (count+1) * sizeof(char*));
 	if (pieces == NULL) {
-		puts("Error allocating memory");
+		fprintf(stderr, "split(): Error allocating memory");
 		return NULL;
 	}
 
